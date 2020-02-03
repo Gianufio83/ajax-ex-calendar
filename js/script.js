@@ -7,7 +7,7 @@ $(document).ready(function() {
   var source = $("#entry-template").html();
   var template = Handlebars.compile(source);
 
-  for (var i = 0; i < 31; i++) {
+  for (var i = 0; i < thisMonth.daysInMonth(); i++) {
     var dayObject = {
       year : thisMonth.year(),
       day : i+1,
