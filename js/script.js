@@ -2,20 +2,29 @@
 
 
 $(document).ready(function() {
+  var thisMonth = moment('2018-01-01');
+  $('.month-name').text(thisMonth.format('MMMM YYYY'));
+  var source = $("#entry-template").html();
+  var template = Handlebars.compile(source);
 
- var mese = moment([2020, 0, 1]).subtract(24, 'months');
- console.log(mese);
- // var data = mese.format('YYYY MM DD') ;
- // console.log(data);
- // var monthsDays = mese.date();
- // console.log(monthsDays);
- var calendar = {
-   Capodanno : 'Capodanno',
-   Epifania : 'Epifania'
- };
+  for (var i = 0; i < 31; i++) {
+    var dayObject = {
+      year : thisMonth.year(),
+      day : i+1,
+      month : thisMonth.month()
+    }
+    var thisDate = moment(dayObject);
+    console.log(thisDate);
+    var context = {
+      giorno : thisDate.format('DD MMMM'),
+      'extended-date' : thisDate.format('YYYY-MM-DD')
+    }
+    var html = template(context);
+    $('.days-list').append(html);
+  }
  $.ajax(
     {
-      'url' : 'https://flynn.boolean.careers/exercises/api/holidays?year=2018&month=0.',
+      'url' : 'https://flynn.boolean.careers/exercises/api/holidays',
       'method' : 'GET',
       'data' : {
         year : 2018,
@@ -33,14 +42,15 @@ $(document).ready(function() {
     }
   );
 
-  function giorniFestivi(day) {
-    for (var i = 0; i < day.length; i++) {
-       var feste = day[i];
-       var source = $("#entry-template").html();
-       var template = Handlebars.compile(source);
-       var html = template(calendar);
-       $('.months-container').append(html);
-     }
+  function giorniFestivi(holidays) {
+    if (holidays.length >= 1) {
+      for (var i = 0; i < holidays.length; i++) {
+         var holiday = holidays[i];
+         var listItem = $('.month-day[data-extended-date="' + holiday.date + '"]' );
+         listItem.addClass('holiday');
+         listItem.text(listItem.text() + ' - ' +  holiday.name);
+      }
+    }
    }
 
 
