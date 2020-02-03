@@ -5,6 +5,8 @@
 }
 body {
   font-size: 20px;
+  width: 100%;
+  height: 100%;
   /* background-color: ; */
 }
 span {
@@ -21,8 +23,8 @@ span {
   text-align: center;
 
 }
-.container {
+/* .container {
   width: 1070px;
-  height: 100%;
+  height: 100vh;
   margin: 0 auto;
-}
+} */
