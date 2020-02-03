@@ -46,9 +46,9 @@ $(document).ready(function() {
     if (holidays.length >= 1) {
       for (var i = 0; i < holidays.length; i++) {
          var holiday = holidays[i];
-         var listItem = $('.month-day[data-extended-date="' + holiday.date + '"]' );
-         listItem.addClass('holiday');
-         listItem.text(listItem.text() + ' - ' +  holiday.name);
+         var items = $('.month-day[data-extended-date="' + holiday.date + '"]' );
+         items.addClass('holiday');
+         items.text(items.text() + ' - ' +  holiday.name);
       }
     }
    }
