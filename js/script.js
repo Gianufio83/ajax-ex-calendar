@@ -18,6 +18,29 @@ $(document).ready(function() {
 
 
 // Funzioni
+
+  function printMonth(month) {
+   $('.days-list').html('');
+   // var thisMonth = moment('2018-01-01');
+   $('.month-name').text(month.format('MMMM YYYY'));
+   $('.month-name').attr('data-this-month', month.format('YYYY-MM'));
+   var daysInMonth = month.daysInMonth();
+
+   for (var i = 1; i <= daysInMonth; i++) {
+     var source = $("#entry-template").html();
+     var template = Handlebars.compile(source);
+     var context = {
+       day : i ,
+       month : month.format('MMMM'),
+       // giorno : month.format('DD MMMM'),
+       'extended-date' : month.format('YYYY-MM') + '-' + addZero(i)
+     };
+     var html = template(context);
+     $('.days-list').append(html);
+
+ }
+
+};
   function giorniFestivi(holidays) {
     $.ajax(
        {
@@ -47,49 +70,34 @@ $(document).ready(function() {
      );
 
    }
-   function printMonth(month) {
-     $('.days-list').html('');
-     // var thisMonth = moment('2018-01-01');
-     $('.month-name').text(month.format('MMMM YYYY'));
-     $('.month-name').attr('data-this-month', month.format('YYYY-MM'));
-     var daysInMonth = month.daysInMonth();
-
-     for (var i = 1; i <= daysInMonth; i++) {
-       var source = $("#entry-template").html();
-       var template = Handlebars.compile(source);
-       var context = {
-         day : i ,
-         month : month.format('MMMM'),
-         // giorno : month.format('DD MMMM'),
-         'extended-date' : month.format('YYYY-MM') + '-' + addZero(i)
-       };
-       var html = template(context);
-       $('.days-list').append(html);
-
-   }
-
-};
-function addZero(num) {
-  if (num < 10) {
-    return '0' + num;
+  function addZero(num) {
+    if (num < 10) {
+      return '0' + num;
+    }
+    return num
   }
-  return num
-}
 // quando clicchiamo su next
-$('#next').click(function () {
+  $('#next').click(function () {
   //dobbiamo andare avanti di un mese e chiamare la funzione che genera i giorni e poi  le festivita
   var currentMonth = $('.month-name').attr('data-this-month');
   var date = moment(currentMonth).add(1, 'months');
-  console.log(date);
+  if (currentMonth == '2018-12') {
+    alert('controlla solo anno 2018');
+    var date = moment(currentMonth).substract(11, 'months');
+  }
   printMonth(date);
   giorniFestivi(date);
 });
-$('#prev').click(function () {
+// quando clicchiamo su prev
+  $('#prev').click(function () {
   //dobbiamo andare indietro di un mese e chiamare la funzione che genera i giorni e poi  le festivita
   var currentMonth = $('.month-name').attr('data-this-month');
   var date = moment(currentMonth).subtract(1, 'months');
-  console.log(date);
+  if (currentMonth == '2018-01') {
+    alert('controlla solo anno 2018');
+    var date = moment(currentMonth).add(0, 'months');
+  }
   printMonth(date);
   giorniFestivi(date);
-});
   });
+});
