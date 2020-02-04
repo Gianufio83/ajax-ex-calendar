@@ -16,8 +16,6 @@ $(document).ready(function() {
   printMonth(dayObject);
   giorniFestivi(dayObject);
 
-  });
-
 
 // Funzioni
   function giorniFestivi(holidays) {
@@ -69,27 +67,29 @@ $(document).ready(function() {
        $('.days-list').append(html);
 
    }
-   function addZero(num) {
-     if (num < 10) {
-       return '0' + num;
-     }
-     return num
-   }
-   // quando clicchiamo su next
-   $('#next').click(function () {
-     //dobbiamo andare avanti di un mese e chiamare la funzione che genera i giorni e poi  le festivita
-     var currentMonth = $('.month-name').attr('data-this-month');
-     var date = moment(currentMonth).add(1, 'months');
-     console.log(date);
-     printMonth(date);
-     giorniFestivi(date);
-   });
-   $('#prev').click(function () {
-     //dobbiamo andare indietro di un mese e chiamare la funzione che genera i giorni e poi  le festivita
-     var currentMonth = $('.month-name').attr('data-this-month');
-     var date = moment(currentMonth).subtract(1, 'months');
-     console.log(date);
-     printMonth(date);
-     giorniFestivi(date);
-   });
+
 };
+function addZero(num) {
+  if (num < 10) {
+    return '0' + num;
+  }
+  return num
+}
+// quando clicchiamo su next
+$('#next').click(function () {
+  //dobbiamo andare avanti di un mese e chiamare la funzione che genera i giorni e poi  le festivita
+  var currentMonth = $('.month-name').attr('data-this-month');
+  var date = moment(currentMonth).add(1, 'months');
+  console.log(date);
+  printMonth(date);
+  giorniFestivi(date);
+});
+$('#prev').click(function () {
+  //dobbiamo andare indietro di un mese e chiamare la funzione che genera i giorni e poi  le festivita
+  var currentMonth = $('.month-name').attr('data-this-month');
+  var date = moment(currentMonth).subtract(1, 'months');
+  console.log(date);
+  printMonth(date);
+  giorniFestivi(date);
+});
+  });
